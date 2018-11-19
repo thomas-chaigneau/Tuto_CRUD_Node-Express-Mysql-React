@@ -139,6 +139,7 @@ submitTeamName = (e) => {
   else {
     axios.post('http://localhost:3002/registerTeam', this.state)
       .then(this.setState({teamName: ''}))
+      .then(window.location.reload());
   }
 }
   render() {
@@ -267,7 +268,43 @@ Finaly, restart your react app :
 ```bash
 $ npm start
 ```
-Post a new team name and update the page. 
+Post a new team name and it should appear. 
 
-If you want to have a button to delete or modify the team names, you have to create a "Put", and a "Delete" route !
+## DELETE a team (Views)
+Maybe this have to be done with parsimony because the data couldn't be fond again.
+Let's begin by views, we have to identify the team we want to delete. We will use the 'key' atttribute of the element we render in the team name list to identify chat to delete.
+```js
+//views/Allteams.js
+    return (
+      <ul>
+          {allTeams.map((item) => 
+            <p key={item.id}>
+              <span>{item.TeamName}  </span>
+              <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
+            </p>)}
+      </ul>
+    )
+```
+The key attripute in passed as argument to the deleteTeam function, that we can define like :
+```js
+//views/Allteams.js
+deleteTeam = (id) => {
+  if (window.confirm('Are you sure you wish to delete this team?')) {
+    axios.delete(`http://localhost:3002/modifyATeam/${id}`)
+    .then(window.location.reload());
+  }
+  else return
+}
+```
+## DELETE a team (backend)
+```js
+app.delete('/modifyATeam/:TeamId', (req, res) => {
+    const { TeamId } = req.params;
+    if (!TeamId) return;
+    connection.query('DELETE FROM Team WHERE id = ?', TeamId, (err, rows, fields) => {
+        if (err) throw err;
+        console.log(`you delete ${rows.affectedRows} row`);
+      })
+  });
+  ```
 
