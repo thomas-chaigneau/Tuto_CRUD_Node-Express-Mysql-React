@@ -21,6 +21,7 @@ submitTeamName = (e) => {
   else {
     axios.post('http://localhost:3002/registerTeam', this.state)
       .then(this.setState({teamName: ''}))
+      .then(window.location.reload());
   }
 }
   render() {

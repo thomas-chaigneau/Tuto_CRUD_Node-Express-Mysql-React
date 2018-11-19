@@ -18,25 +18,30 @@ loadTeamsNames = () => {
 }
 
 deleteTeam = (id) => {
-  console.log(id)
-  axios.delete(`http://localhost:3002/modifyATeam/${id}`)
+  if (window.confirm('Are you sure you wish to delete this team?')) {
+    axios.delete(`http://localhost:3002/modifyATeam/${id}`)
+    .then(window.location.reload());
+  }
+  else return
 }
-
+   
 
 componentDidMount() {
   this.loadTeamsNames()
 }
   render() {
-
     const { allTeams , isLoaded } = this.state;
     if (!isLoaded) return <div>Loading...</div>
     return (
-        <ul>
-            {allTeams.map((item) => 
-              <div key={item.id}><p> {item.TeamName} <button onClick={() => this.deleteTeam(item.id)}>Delete</button></p></div>)}
-        </ul>
-  )
-            }
+      <ul>
+          {allTeams.map((item) => 
+            <p key={item.id}>
+              <span>{item.TeamName}  </span>
+              <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
+            </p>)}
+      </ul>
+    )
+  }
 };
 
 export default Allteams;
