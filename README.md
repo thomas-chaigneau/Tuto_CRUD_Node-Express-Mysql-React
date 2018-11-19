@@ -2,8 +2,8 @@ nov. 2018 - introduction : [google slides (fr)](https://docs.google.com/presenta
 
 ## Working space
 Create a project folder with a backend folder and git init it.
-Add in the .gitignore sensible files we will use (secret.js will contain db connection informations).
-In views init an react app called views.
+Add in the .gitignore sensitive files we will use (secret.js will contain db connection informations).
+Init an react app called "views".
 Finally, open the project in vscode.
 
 To do it, play this command on your terminal :
@@ -66,11 +66,11 @@ app.listen(port, err => {
 ```
 
 ## DB connection to server
-Still in your backend foflder, install [mysql package](https://www.npmjs.com/package/mysql).
+Still in your backend folder, install [mysql package](https://www.npmjs.com/package/mysql).
 ```bash
 $ npm i mysql
 ```
-In secret.js, create a constante to stock your db configuration and export it.
+In secret.js, create a constant to stock your db configuration and export it.
 ```js
 //backend/secret.js
 const mysql = require('mysql');
@@ -83,7 +83,7 @@ const connection = mysql.createConnection({
 module.exports = connection;
 ```
 
-Import your db configuration in serveur.js and use the connect methode :
+Import your db configuration in server.js and use the connect method :
 
 ```js
 //backend/server.js
@@ -95,8 +95,8 @@ connection.connect();
 ## 'Post' route
 Here we use [express routing](https://expressjs.com/en/starter/basic-routing.html).
 * line 1 : beware not to interchange req and res ... :)
-* line 2 : this is a little anticipation of want we will post, from views, in this road.
-* line 4 : [performe the sql query](https://www.npmjs.com/package/mysql#performing-queries)
+* line 2 : this is a little anticipation of what we will post, from views, in this route.
+* line 4 : [perform the sql query](https://www.npmjs.com/package/mysql#performing-queries)
 ```
 app.post(`/registerTeam`, (req, res) => {
     const { teamName } = req.body;
@@ -108,7 +108,7 @@ app.post(`/registerTeam`, (req, res) => {
 });
 ```
 ## REACT form and request posting
-Make sure to be in your views folder. To post in roads we can use [axios](https://github.com/axios/axios)
+Make sure to be in your views folder. To post in routes, we can use [axios](https://github.com/axios/axios)
 
 ```bash
 $ npm i axios
@@ -158,7 +158,7 @@ submitTeamName = (e) => {
 
 export default App;
 ```
-If you make a test, you will have errors. After some investigations, you can find out two issues [Cors (fr)](https://developer.mozilla.org/fr/docs/Web/HTTP/CORS) and [body parsing](https://stackoverflow.com/questions/38306569/what-does-body-parser-do-with-express?answertab=votes#tab-top). We need to parse to parse the Json file we send in the road and manage with cors.
+If you make a test, you will have errors. After some investigations, you can find out two issues [Cross-origin (fr)](https://developer.mozilla.org/fr/docs/Web/HTTP/CORS) and [body parsing](https://stackoverflow.com/questions/38306569/what-does-body-parser-do-with-express?answertab=votes#tab-top). We need to parse the Json file we send in the route and manage with cors.
 
 ## Middleware
 Go back to the back and and install [cors](https://www.npmjs.com/package/cors) and [body-parser](https://www.npmjs.com/package/body-parser)
@@ -177,7 +177,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 ```
-Now run your server and react app : in your backend folder play this commande :
+Now run your server and react app : in your backend folder play this command :
 ```bash
 $ node server.js
 ```
@@ -189,7 +189,7 @@ $ npm start
 If you post a team name in your form, it will works :). You can check in workbench, with a select sql query.
 
 ## 'Get' route
-This aim is to see all teams registered in a web page.
+The aim is to see all teams registered in a web page.
 
 * line 3 : see [Performing queries](https://www.npmjs.com/package/mysql#performing-queries)
 
@@ -203,16 +203,16 @@ app.get('/getTeam',  (req, res) => {
   })
 ```
 
-resart your server
+restart your server
 ```bash
 $ ctr+c
 $ node server
 ```
 then go to => http://localhost:3002/getTeam
-now you sould have you API usable
+now you sould have your API usable
 
 ## GET api in front
-You can create an other react componant :
+You can create an other react component :
 make sure to be in views/src
 ```bash
 $ touch Allteams.js
@@ -262,9 +262,11 @@ export default Allteams;
 //views/src/Apps.js
 import AllTeams from './Allteams'
 ```
-Finaly, resart your react app :
+Finaly, restart your react app :
 ```bash
 $ npm start
 ```
-Post a new team name and actualise the page. 
-Now you can create put, and delete route !
+Post a new team name and update the page. 
+
+If you want to have a button to delete or modify the team names, you have to create a "Put", and a "Delete" route !
+
