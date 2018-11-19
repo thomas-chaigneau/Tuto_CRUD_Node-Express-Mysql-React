@@ -96,8 +96,9 @@ connection.connect();
 Here we use [express routing](https://expressjs.com/en/starter/basic-routing.html).
 * line 1 : beware not to interchange req and res ... :)
 * line 2 : this is a little anticipation of what we will post, from views, in this route.
-* line 4 : [perform the sql query](https://www.npmjs.com/package/mysql#performing-queries)
-```
+* line 4 : [perform the sql query](https://www.npmjs.com/package/mysql#performing-queries) It's much better to [escape query Values](https://github.com/mysqljs/mysql#escaping-query-values)
+
+```js
 app.post(`/registerTeam`, (req, res) => {
     const { teamName } = req.body;
     if (!teamName) return;

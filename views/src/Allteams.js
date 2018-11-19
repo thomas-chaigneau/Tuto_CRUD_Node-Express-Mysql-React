@@ -9,7 +9,7 @@ class Allteams extends Component {
                   isLoaded: false};
   }
 
-loadMEssages = () => {
+loadTeamsNames = () => {
   axios.get(`http://localhost:3002/getTeam`)
     .then(response => this.setState({ 
       allTeams: response.data.reverse(),
@@ -18,7 +18,7 @@ loadMEssages = () => {
 }
 
 componentDidMount() {
-  this.loadMEssages()
+  this.loadTeamsNames()
 }
   render() {
 

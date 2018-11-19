@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const connection = require('./secret');
 const bodyParser = require('body-parser');
+const mysql = require('mysql');
 const cors = require('cors');
 const port = 3002;
 
@@ -17,11 +18,20 @@ app.get(`/`, (req, res) => {
 app.post(`/registerTeam`, (req, res) => {
     const { teamName } = req.body;
     if (!teamName) return;
-    connection.query(`INSERT INTO Team (TeamName) VALUES ('${teamName}');`, err => {
+    connection.query(`INSERT INTO Team (TeamName) VALUES (?);`, teamName, err => {
         if (err) throw err;
         console.log(`${teamName} INSERTED`)
     });
 });
+
+// app.post(`/registerTeam`, (req, res) => {
+//     const { teamName } = req.body;
+//     if (!teamName) return;
+//     connection.query(`INSERT INTO Team (TeamName) VALUES ('${teamName}');`, err => {
+//         if (err) throw err;
+//         console.log(`${teamName} INSERTED`)
+//     });
+// });
 
 app.get('/getTeam',  (req, res) => {
     connection.query('SELECT * FROM Team;', (err, rows, fields) => {
