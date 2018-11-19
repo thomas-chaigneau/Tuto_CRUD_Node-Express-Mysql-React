@@ -1,5 +1,4 @@
-nov. 2018
-Introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
+nov. 2018 - introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
 
 ## Working space
 Create a project folder with a backend folder and git init it.
