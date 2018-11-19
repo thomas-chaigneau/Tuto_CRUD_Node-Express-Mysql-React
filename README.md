@@ -285,7 +285,7 @@ Let's begin by views, we have to identify the team we want to delete. We will us
       </ul>
     )
 ```
-The key attripute in passed as argument to the deleteTeam function, that we can define like :
+The key attribute in passed as an argument to the deleteTeam function, that we can define like :
 ```js
 //views/Allteams.js
 deleteTeam = (id) => {
