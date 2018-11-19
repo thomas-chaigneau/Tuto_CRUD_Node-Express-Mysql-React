@@ -1,3 +1,4 @@
+nov. 2018
 Introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
 
 ## Working space
@@ -24,7 +25,7 @@ You can [download](https://www.mysql.com/fr/products/workbench/) and run it :
 ```bash
 $ mysql-workbench
 ```
-Choose a password that you don't use for other sensitive plateform.
+Choose a password that you don't use for other sensitive plateforms.
 Once workbench is configured, you can run this sql query to create your DB :
 
 ```sql
@@ -108,7 +109,7 @@ app.post(`/registerTeam`, (req, res) => {
 });
 ```
 ## REACT form and request posting
-Make sure to be in your vews folder. To post in roads we can use [axios](https://github.com/axios/axios)
+Make sure to be in your views folder. To post in roads we can use [axios](https://github.com/axios/axios)
 
 ```bash
 $ npm i axios
@@ -158,7 +159,7 @@ submitTeamName = (e) => {
 
 export default App;
 ```
-If you make a test, you will have errors. after some investigations, you can find out two issues [Cors (fr)](https://developer.mozilla.org/fr/docs/Web/HTTP/CORS) and [body parsing](https://stackoverflow.com/questions/38306569/what-does-body-parser-do-with-express?answertab=votes#tab-top). We need to parse to parse the Json file we send in the road.
+If you make a test, you will have errors. After some investigations, you can find out two issues [Cors (fr)](https://developer.mozilla.org/fr/docs/Web/HTTP/CORS) and [body parsing](https://stackoverflow.com/questions/38306569/what-does-body-parser-do-with-express?answertab=votes#tab-top). We need to parse to parse the Json file we send in the road and manage with cors.
 
 ## Middleware
 Go back to the back and and install [cors](https://www.npmjs.com/package/cors) and [body-parser](https://www.npmjs.com/package/body-parser)
@@ -177,7 +178,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 ```
-Now run your server : in your backend folder play this commande :
+Now run your server and react app : in your backend folder play this commande :
 ```bash
 $ node server.js
 ```
@@ -186,9 +187,11 @@ And in views :
 $ npm start
 ```
 
-If you post a team name in your from, it will works :). You can check in workbench, with a select sql query.
+If you post a team name in your form, it will works :). You can check in workbench, with a select sql query.
 
 ## 'Get' route
+This aim is to see all teams registered in a web page.
+
 * line 3 : see [Performing queries](https://www.npmjs.com/package/mysql#performing-queries)
 
 ```js
@@ -261,7 +264,6 @@ export default Allteams;
 import AllTeams from './Allteams'
 ```
 Finaly, resart your react app :
-You can create an other react componant :
 ```bash
 $ npm start
 ```
