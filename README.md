@@ -102,7 +102,7 @@ Here we use [express routing](https://expressjs.com/en/starter/basic-routing.htm
 app.post(`/registerTeam`, (req, res) => {
     const { teamName } = req.body;
     if (!teamName) return;
-    connection.query(`INSERT INTO Team (TeamName) VALUES ('${teamName}');`, err => {
+    connection.query(`INSERT INTO Team (TeamName) VALUES (?);`, teamName, err => {
         if (err) throw err;
         console.log(`${teamName} INSERTED`)
     });
