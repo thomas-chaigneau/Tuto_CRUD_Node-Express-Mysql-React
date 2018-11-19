@@ -224,7 +224,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 
-class AllTeams extends Component {
+class Allteams extends Component {
   constructor() {
     super();
     this.state = {allTeams: [],
