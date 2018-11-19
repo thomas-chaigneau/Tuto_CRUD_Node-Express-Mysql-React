@@ -17,6 +17,12 @@ loadTeamsNames = () => {
   console.log('Chargez !!!!!!')
 }
 
+deleteTeam = (id) => {
+  console.log(id)
+  axios.delete(`http://localhost:3002/modifyATeam/${id}`)
+}
+
+
 componentDidMount() {
   this.loadTeamsNames()
 }
@@ -27,7 +33,7 @@ componentDidMount() {
     return (
         <ul>
             {allTeams.map((item) => 
-                <p key={item.id}> {item.TeamName} {item.message} </p>)}
+              <div key={item.id}><p> {item.TeamName} <button onClick={() => this.deleteTeam(item.id)}>Delete</button></p></div>)}
         </ul>
   )
             }
