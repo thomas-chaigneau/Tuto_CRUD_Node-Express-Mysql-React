@@ -3,7 +3,8 @@ nov. 2018
 #### The aim is to create a application to Post, Get and Put and Delete team names :
 ![applicaiton capture](https://image.ibb.co/bxj6x0/Capture-du-2018-11-20-12-37-11.png)
 
-introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
+Introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
+_The views, with React, is not well done : the tuto has been made as a support for a 45 minute live coding, every body was ok with React._
 
 ## Working space
 Create a project folder with a backend folder and git init it.
@@ -14,10 +15,9 @@ Finally, open the project in vscode.
 To do it, play this command on your terminal :
 ```bash
 mkdir escapeGame && cd escapeGame
-mkdir backend
 git init
 echo -e "backend/secret.js\n\nbackend/node_modules" > .gitignore
-cd backend && touch server.js secret.js
+mkdir backend && cd backend && touch server.js secret.js
 npm init -y
 cd .. && create-react-app views
 code .
@@ -148,8 +148,8 @@ submitTeamName = (e) => {
     axios.post('http://localhost:3002/registerTeam', this.state)
       .then(this.setState({teamName: ''}))
       .then(window.location.reload());
-  }
-}
+  };
+};
     render() {
       return (
         <form onSubmit={this.submitTeamName}>
@@ -208,9 +208,9 @@ The aim is to see all teams registered in a web page.
 app.get('/getTeam',  (req, res) => {
     connection.query('SELECT * FROM Team;', (err, rows, fields) => {
       if (err) throw err;
-      res.status(200).send(rows);
-    })
-  })
+      res.send(rows).status(200);
+    });
+  });
 ```
 
 restart your server
@@ -239,21 +239,21 @@ class Allteams extends Component {
         super();
             this.state = {allTeams: [],
                           isLoaded: false};
-    }
+    };
 
     loadTeamsNames = () => {
         axios.get(`http://localhost:3002/getTeam`)
         .then(response => this.setState({ allTeams: response.data.reverse(),
                                           isLoaded : true}));
-    }
+    };
 
     componentDidMount() {
         this.loadTeamsNames();
-    }
+    };
     
     render() {
         const { allTeams , isLoaded } = this.state;
-        if (!isLoaded) return <div>Loading...</div>
+        if (!isLoaded) return <div>Loading...</div>;
         return (
             <ul>
                 {allTeams.map((item) => 
@@ -291,7 +291,7 @@ Let's begin by views, we have to identify the team we want to delete. We will us
               <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
             </p>)}
       </ul>
-    )
+    );
 ```
 The item id in passed as an argument to the deleteTeam function. When you click the button, the item id is throwed, via parameter, to the delete route.
 ```js
@@ -299,9 +299,8 @@ The item id in passed as an argument to the deleteTeam function. When you click 
 deleteTeam = (id) => {
   if (window.confirm('Are you sure you wish to delete this team?')) {
     axios.delete(`http://localhost:3002/deleteATeam/${id}`)
-    .then(window.location.reload());
-  };
-  else return;
+    .then(window.location.reload()); //this line is horrible
+  } else return;
 };
 ```
 
@@ -323,27 +322,24 @@ In render, it's similar to Delete
 ```js
 //views/Allteams.js
 return (
-      <ul>
-          {allTeams.map((item) => 
-            <p key={item.id}>
-              <span>{item.TeamName}  </span>
-              <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
-              <button onClick={() => this.modifyTeam(item.id)}>Modify</button>
-            </p>)}
-      </ul>
-    );
-  };
-  else return;
-};
+    <ul>
+        {allTeams.map((item) => 
+          <p key={item.id}>
+            <span>{item.TeamName}  </span>
+            <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
+            <button onClick={() => this.modifyTeam(item.id)}>Modify</button>
+          </p>)}
+    </ul>
+);
 ```
-We can define the modity function like this :
+We can define the modity function like this (we can can notice that we have to 'send' an object :
 ```js
 modifyTeam = (id) => {
   const teamNameToModify = this.state.allTeams.filter(item => item.id === id)[0].TeamName;
   const newName = prompt("What the new team name ?", teamNameToModify);
   if (newName)
-    axios.put(`http://localhost:3002/modifyATeam/${id}`,{ newName })
-    .then(window.location.reload());
+    axios.put(`http://localhost:3002/modifyATeam/${id}`, { newName })
+    .then(window.location.reload()); //this line is horrible
 };
 ```
 
