@@ -110,7 +110,7 @@ app.post(`/registerTeam`, (req, res) => {
     if (!teamName) return;
     connection.query(`INSERT INTO Team (TeamName) VALUES (?);`, teamName, err => {
         if (err) throw err;
-        console.log(`${teamName} INSERTED`)
+        console.log(`${teamName} INSERTED`);
     });
 });
 ```
@@ -141,7 +141,7 @@ handleChangeTxt = (e) => {
 }
 
 submitTeamName = (e) => {
-  console.log(this.state)
+  console.log(this.state);
   e.preventDefault();
   if (!this.state.teamName) alert('team name is empty');
   else {
@@ -150,7 +150,7 @@ submitTeamName = (e) => {
       .then(window.location.reload());
   }
 }
-  render() {
+    render() {
       return (
         <form onSubmit={this.submitTeamName}>
           <input
@@ -162,8 +162,8 @@ submitTeamName = (e) => {
           />
           <button type="submit">Submit</button>
       </form>
-      );
-  }
+    );
+  };
 };
 
 export default App;
@@ -208,7 +208,7 @@ The aim is to see all teams registered in a web page.
 app.get('/getTeam',  (req, res) => {
     connection.query('SELECT * FROM Team;', (err, rows, fields) => {
       if (err) throw err;
-      res.status(200).send(rows)
+      res.status(200).send(rows);
     })
   })
 ```
@@ -238,7 +238,7 @@ class Allteams extends Component {
     constructor() {
         super();
             this.state = {allTeams: [],
-                      isLoaded: false};
+                          isLoaded: false};
     }
 
     loadTeamsNames = () => {
@@ -248,7 +248,7 @@ class Allteams extends Component {
     }
 
     componentDidMount() {
-        this.loadTeamsNames()
+        this.loadTeamsNames();
     }
     
     render() {
@@ -259,8 +259,8 @@ class Allteams extends Component {
                 {allTeams.map((item) => 
                     <p key={item.id}> {item.TeamName} {item.message} </p>)}
             </ul>
-        )
-    }
+        );
+    };
 };
 
 export default Allteams;
@@ -300,9 +300,9 @@ deleteTeam = (id) => {
   if (window.confirm('Are you sure you wish to delete this team?')) {
     axios.delete(`http://localhost:3002/deleteATeam/${id}`)
     .then(window.location.reload());
-  }
-  else return
-}
+  };
+  else return;
+};
 ```
 
 ## DELETE a team (backend)
@@ -313,7 +313,7 @@ app.delete('/deleteATeam/:TeamId', (req, res) => {
     connection.query('DELETE FROM Team WHERE id = ?', TeamId, (err, rows, fields) => {
         if (err) throw err;
         console.log(`you delete ${rows.affectedRows} row`);
-      })
+      });
   });
   ```
   
@@ -331,10 +331,10 @@ return (
               <button onClick={() => this.modifyTeam(item.id)}>Modify</button>
             </p>)}
       </ul>
-    )
-  }
-  else return
-}
+    );
+  };
+  else return;
+};
 ```
 We can define the modity function like this :
 ```js
@@ -343,8 +343,8 @@ modifyTeam = (id) => {
   const newName = prompt("What the new team name ?", teamNameToModify);
   if (newName)
     axios.put(`http://localhost:3002/modifyATeam/${id}`,{ newName })
-    .then(window.location.reload());;
-}
+    .then(window.location.reload());
+};
 ```
 
 ## Modify a team (backend)
@@ -356,6 +356,6 @@ modifyTeam = (id) => {
     connection.query('UPDATE Team SET TeamName = ? WHERE id = ?', [NewTeamName, TeamId], err => {
         if (err) throw err;
         console.log(`you modify row number ${TeamId} for ${NewTeamName}`);
-    })
+    });
   });
   ```
