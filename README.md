@@ -1,6 +1,6 @@
 nov. 2018 
 
-#### the aim is to create a application to post, get and delete team names :
+#### The aim is to create a application to Post, Get and Put and Delete team names :
 ![applicaiton capture](https://image.ibb.co/bxj6x0/Capture-du-2018-11-20-12-37-11.png)
 
 introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
@@ -76,6 +76,7 @@ Still in your backend folder, install [mysql package](https://www.npmjs.com/pack
 $ npm i mysql
 ```
 In secret.js, create a constant to stock your db configuration and export it.
+* beware : not ```'<password>'``` but ```'password'```
 ```js
 //backend/secret.js
 const mysql = require('mysql');
@@ -114,8 +115,9 @@ app.post(`/registerTeam`, (req, res) => {
 });
 ```
 ## REACT form and request posting
-Make sure to be in your views folder. To post in routes, we can use [axios](https://github.com/axios/axios)
-With axios.post(route, data), data is an object.
+Make sure to be in your views folder. To post in routes, we can use [axios](https://github.com/axios/axios).
+
+* With axios.post(route, data), data is an object.
 
 ```bash
 $ npm i axios
@@ -233,34 +235,32 @@ import axios from 'axios';
 import './App.css';
 
 class Allteams extends Component {
-  constructor() {
-    super();
-    this.state = {allTeams: [],
-                  isLoaded: false};
-  }
+    constructor() {
+        super();
+            this.state = {allTeams: [],
+                      isLoaded: false};
+    }
 
-loadMEssages = () => {
-  axios.get(`http://localhost:3002/getTeam`)
-    .then(response => this.setState({ 
-      allTeams: response.data.reverse(),
-      isLoaded : true}));
-  console.log('Chargez !!!!!!')
-}
+    loadTeamsNames = () => {
+        axios.get(`http://localhost:3002/getTeam`)
+        .then(response => this.setState({ allTeams: response.data.reverse(),
+                                          isLoaded : true}));
+    }
 
-componentDidMount() {
-  this.loadMEssages()
-}
-  render() {
-
-    const { allTeams , isLoaded } = this.state;
-    if (!isLoaded) return <div>Loading...</div>
-    return (
-        <ul>
-            {allTeams.map((item) => 
-                <p key={item.id}> {item.TeamName} {item.message} </p>)}
-        </ul>
-  )
-            }
+    componentDidMount() {
+        this.loadTeamsNames()
+    }
+    
+    render() {
+        const { allTeams , isLoaded } = this.state;
+        if (!isLoaded) return <div>Loading...</div>
+        return (
+            <ul>
+                {allTeams.map((item) => 
+                    <p key={item.id}> {item.TeamName} {item.message} </p>)}
+            </ul>
+        )
+    }
 };
 
 export default Allteams;
@@ -269,6 +269,8 @@ export default Allteams;
 ```js
 //views/src/Apps.js
 import AllTeams from './Allteams'
+//...
+<Allteams />
 ```
 Finaly, restart your react app :
 ```bash
@@ -310,7 +312,7 @@ return (
 
 ## DELETE a team (backend)
 ```js
-app.delete('/deleteATeamATeam/:TeamId', (req, res) => {
+app.delete('/deleteATeam/:TeamId', (req, res) => {
     const { TeamId } = req.params;
     if (!TeamId) return;
     connection.query('DELETE FROM Team WHERE id = ?', TeamId, (err, rows, fields) => {
@@ -342,10 +344,11 @@ return (
 We can define the modity function like this :
 ```js
 modifyTeam = (id) => {
-    const newName = prompt("What the new team name ?", "");
-    if (newName)
-        axios.put(`http://localhost:3002/modifyATeam/${id}`,{ newName })
-        .then(window.location.reload());;
+  const teamNameToModify = this.state.allTeams.filter(item => item.id === id)[0].TeamName;
+  const newName = prompt("What the new team name ?", teamNameToModify);
+  if (newName)
+    axios.put(`http://localhost:3002/modifyATeam/${id}`,{ newName })
+    .then(window.location.reload());;
 }
 ```
 
@@ -353,11 +356,11 @@ modifyTeam = (id) => {
 ```js
   app.put('/modifyATeam/:TeamId', (req, res) => {
     const { TeamId } = req.params;
-    const NewTEamName = req.body.newName;
-    if (!NewTEamName) return;
-    connection.query('UPDATE Team SET TeamName = ? WHERE id = ?', [NewTEamName, TeamId], err => {
+    const NewTeamName = req.body.newName;
+    if (!NewTeamName) return;
+    connection.query('UPDATE Team SET TeamName = ? WHERE id = ?', [NewTeamName, TeamId], err => {
         if (err) throw err;
-        console.log(`you modify row number ${TeamId} for ${NewTEamName}`);
+        console.log(`you modify row number ${TeamId} for ${NewTeamName}`);
     })
   });
   ```
