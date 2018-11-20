@@ -1,4 +1,10 @@
-nov. 2018 - introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
+nov. 2018 
+
+#### the aim is to create a application to post, get and delete team names :
+![applicaiton capture](https://image.ibb.co/dJeYS0/Capture-du-2018-11-20-10-26-27.png)
+
+
+introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
 
 ## Working space
 Create a project folder with a backend folder and git init it.
