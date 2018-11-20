@@ -4,7 +4,8 @@ nov. 2018
 ![applicaiton capture](https://image.ibb.co/bxj6x0/Capture-du-2018-11-20-12-37-11.png)
 
 Introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
-_The views, with React, is not well done : the tuto has been made as a support for a 45 minute live coding, every body was ok with React._
+
+_Views, with React, is not well done : the tuto has been made as a support for a 45 minute live coding, every body was ok with React._
 
 ## Working space
 Create a project folder with a backend folder and git init it.
