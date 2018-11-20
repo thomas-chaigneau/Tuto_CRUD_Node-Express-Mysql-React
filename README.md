@@ -116,6 +116,7 @@ app.post(`/registerTeam`, (req, res) => {
 ```
 ## REACT form and request posting
 Make sure to be in your views folder. To post in routes, we can use [axios](https://github.com/axios/axios)
+With axios.post(route, data), data is an object.
 
 ```bash
 $ npm i axios
