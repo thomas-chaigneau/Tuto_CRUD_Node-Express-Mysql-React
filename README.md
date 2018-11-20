@@ -296,15 +296,10 @@ Let's begin by views, we have to identify the team we want to delete. We will us
 The item id in passed as an argument to the deleteTeam function. When you click the button, the item id is throwed, via parameter, to the delete route.
 ```js
 //views/Allteams.js
-return (
-      <ul>
-          {allTeams.map((item) => 
-            <p key={item.id}>
-              <span>{item.TeamName}  </span>
-              <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
-            </p>)}
-      </ul>
-    )
+deleteTeam = (id) => {
+  if (window.confirm('Are you sure you wish to delete this team?')) {
+    axios.delete(`http://localhost:3002/deleteATeam/${id}`)
+    .then(window.location.reload());
   }
   else return
 }
