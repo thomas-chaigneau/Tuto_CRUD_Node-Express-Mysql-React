@@ -295,10 +295,15 @@ Let's begin by views, we have to identify the team we want to delete. We will us
 The item id in passed as an argument to the deleteTeam function. When you click the button, the item id is throwed, via parameter, to the delete route.
 ```js
 //views/Allteams.js
-deleteTeam = (id) => {
-  if (window.confirm('Are you sure you wish to delete this team?')) {
-    axios.delete(`http://localhost:3002/deleteATeamATeam/${id}`)
-    .then(window.location.reload());
+return (
+      <ul>
+          {allTeams.map((item) => 
+            <p key={item.id}>
+              <span>{item.TeamName}  </span>
+              <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
+            </p>)}
+      </ul>
+    )
   }
   else return
 }
@@ -315,4 +320,46 @@ app.delete('/deleteATeamATeam/:TeamId', (req, res) => {
       })
   });
   ```
+  
+  
+## Modify a team (Views)
+In render, it's similar to Delete
+```js
+//views/Allteams.js
+return (
+      <ul>
+          {allTeams.map((item) => 
+            <p key={item.id}>
+              <span>{item.TeamName}  </span>
+              <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
+              <button onClick={() => this.modifyTeam(item.id)}>Modify</button>
+            </p>)}
+      </ul>
+    )
+  }
+  else return
+}
+```
+We can define the modity function like this :
+```js
+modifyTeam = (id) => {
+    const newName = prompt("What the new team name ?", "");
+    if (newName)
+        axios.put(`http://localhost:3002/modifyATeam/${id}`,{ newName })
+        .then(window.location.reload());;
+}
+```
 
+## Modify a team (backend)
+```js
+  app.put('/modifyATeam/:TeamId', (req, res) => {
+    const { TeamId } = req.params;
+    const Team = req.body;
+    console.log(TeamId, Team.newName);
+    if (!Team.newName) return;
+    connection.query('UPDATE Team SET TeamName = ? WHERE id = ?', [Team.newName, TeamId], err => {
+            if (err) throw err;
+        console.log(`you modify row number ${TeamId} for ${Team.newName}`);
+    })
+  });
+  ```
