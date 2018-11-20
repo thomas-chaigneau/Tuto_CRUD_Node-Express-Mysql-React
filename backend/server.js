@@ -30,13 +30,23 @@ app.get('/getTeam',  (req, res) => {
     })
 })
 
-app.delete('/modifyATeam/:TeamId', (req, res) => {
+app.delete('/deleteATeam/:TeamId', (req, res) => {
     const { TeamId } = req.params;
     if (!TeamId) return;
     connection.query('DELETE FROM Team WHERE id = ?', TeamId, (err, rows, fields) => {
         if (err) throw err;
         console.log(`you delete ${rows.affectedRows} row`);
       })
+  });
+
+  app.put('/modifyATeam/:TeamId', (req, res) => {
+    const { TeamId } = req.params;
+    const NewTeamName = req.body.newName;
+    if (!NewTeamName) return;
+    connection.query('UPDATE Team SET TeamName = ? WHERE id = ?', [NewTeamName, TeamId], err => {
+        if (err) throw err;
+        console.log(`you modify row number ${TeamId} for ${NewTeamName}`);
+    })
   });
 
 app.listen(port, err => {

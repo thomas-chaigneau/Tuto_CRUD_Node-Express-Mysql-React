@@ -19,12 +19,19 @@ loadTeamsNames = () => {
 
 deleteTeam = (id) => {
   if (window.confirm('Are you sure you wish to delete this team?')) {
-    axios.delete(`http://localhost:3002/modifyATeam/${id}`)
+    axios.delete(`http://localhost:3002/deleteATeam/${id}`)
     .then(window.location.reload());
   }
   else return
 }
-   
+
+modifyTeam = (id) => {
+  const teamNameToModify = this.state.allTeams.filter(item => item.id === id)[0].TeamName;
+  const newName = prompt("What the new team name ?", teamNameToModify);
+  if (newName)
+    axios.put(`http://localhost:3002/modifyATeam/${id}`,{ newName })
+    .then(window.location.reload());;
+}
 
 componentDidMount() {
   this.loadTeamsNames()
@@ -38,6 +45,7 @@ componentDidMount() {
             <p key={item.id}>
               <span>{item.TeamName}  </span>
               <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
+              <button onClick={() => this.modifyTeam(item.id)}>Modify</button>
             </p>)}
       </ul>
     )
