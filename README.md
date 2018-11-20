@@ -1,8 +1,7 @@
 nov. 2018 
 
 #### the aim is to create a application to post, get and delete team names :
-![applicaiton capture](https://image.ibb.co/dJeYS0/Capture-du-2018-11-20-10-26-27.png)
-
+![applicaiton capture](https://image.ibb.co/bxj6x0/Capture-du-2018-11-20-12-37-11.png)
 
 introduction : [google slides (fr)](https://docs.google.com/presentation/d/1i2KmPDIBzpzXQUm-Dx8q5z6Vl39WXCYOJjvKfigxFGo/edit?usp=sharing)
 
@@ -354,12 +353,11 @@ modifyTeam = (id) => {
 ```js
   app.put('/modifyATeam/:TeamId', (req, res) => {
     const { TeamId } = req.params;
-    const Team = req.body;
-    console.log(TeamId, Team.newName);
-    if (!Team.newName) return;
-    connection.query('UPDATE Team SET TeamName = ? WHERE id = ?', [Team.newName, TeamId], err => {
-            if (err) throw err;
-        console.log(`you modify row number ${TeamId} for ${Team.newName}`);
+    const NewTEamName = req.body.newName;
+    if (!NewTEamName) return;
+    connection.query('UPDATE Team SET TeamName = ? WHERE id = ?', [NewTEamName, TeamId], err => {
+        if (err) throw err;
+        console.log(`you modify row number ${TeamId} for ${NewTEamName}`);
     })
   });
   ```
