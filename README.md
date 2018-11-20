@@ -296,7 +296,7 @@ The item id in passed as an argument to the deleteTeam function. When you click 
 //views/Allteams.js
 deleteTeam = (id) => {
   if (window.confirm('Are you sure you wish to delete this team?')) {
-    axios.delete(`http://localhost:3002/modifyATeam/${id}`)
+    axios.delete(`http://localhost:3002/deleteATeamATeam/${id}`)
     .then(window.location.reload());
   }
   else return
@@ -305,7 +305,7 @@ deleteTeam = (id) => {
 
 ## DELETE a team (backend)
 ```js
-app.delete('/modifyATeam/:TeamId', (req, res) => {
+app.delete('/deleteATeamATeam/:TeamId', (req, res) => {
     const { TeamId } = req.params;
     if (!TeamId) return;
     connection.query('DELETE FROM Team WHERE id = ?', TeamId, (err, rows, fields) => {
