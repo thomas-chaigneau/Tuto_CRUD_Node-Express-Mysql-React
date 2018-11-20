@@ -271,7 +271,7 @@ $ npm start
 Post a new team name and it should appear. 
 
 ## DELETE a team (Views)
-Maybe this have to be done with parsimony because the data couldn't be fond again.
+Maybe this have to be done with parsimony because the data couldn't be found again.
 Let's begin by views, we have to identify the team we want to delete. We will use the item id, that we also use as 'key' atttribute of the element we render in the team name list.
 ```js
 //views/Allteams.js
