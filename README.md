@@ -134,15 +134,15 @@ class App extends Component {
   constructor() {
     super();
     this.state = {teamName: ''};
-}
+};
 
 handleChangeTxt = (e) => {
   this.setState({teamName: e.target.value});
   
-}
+};
 
 submitTeamName = (e) => {
-  console.log(this.state);
+  console.log(this.state)
   e.preventDefault();
   if (!this.state.teamName) alert('team name is empty');
   else {
@@ -151,8 +151,10 @@ submitTeamName = (e) => {
       .then(window.location.reload()); //this line is horrible
   };
 };
-    render() {
-      return (
+
+  render() {
+    return (
+      <div>
         <form onSubmit={this.submitTeamName}>
           <input
             type="text"
@@ -162,7 +164,8 @@ submitTeamName = (e) => {
             onChange={this.handleChangeTxt}
           />
           <button type="submit">Submit</button>
-      </form>
+        </form>
+      </div>
     );
   };
 };
@@ -211,7 +214,7 @@ app.get('/getTeam',  (req, res) => {
       if (err) throw err;
       res.send(rows).status(200);
     });
-  });
+});
 ```
 
 restart your server
@@ -258,7 +261,7 @@ class Allteams extends Component {
         return (
             <ul>
                 {allTeams.map((item) => 
-                    <p key={item.id}> {item.TeamName} {item.message} </p>)}
+                    <p key={item.id}> {item.TeamName} </p>)}
             </ul>
         );
     };
@@ -284,15 +287,15 @@ Maybe this have to be done with parsimony because the data couldn't be found aga
 Let's begin by views, we have to identify the team we want to delete. We will use the item id, that we also use as 'key' atttribute of the element we render in the team name list.
 ```js
 //views/Allteams.js
-    return (
-      <ul>
-          {allTeams.map((item) => 
-            <p key={item.id}>
-              <span>{item.TeamName}  </span>
-              <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
-            </p>)}
-      </ul>
-    );
+return (
+  <ul>
+      {allTeams.map((item) => 
+        <p key={item.id}>
+          <span>{item.TeamName}  </span>
+          <button onClick={() => this.deleteTeam(item.id)}>Delete</button>
+        </p>)}
+  </ul>
+);
 ```
 The item id in passed as an argument to the deleteTeam function. When you click the button, the item id is throwed, via parameter, to the delete route.
 ```js
@@ -313,8 +316,8 @@ app.delete('/deleteATeam/:TeamId', (req, res) => {
     connection.query('DELETE FROM Team WHERE id = ?', TeamId, (err, rows, fields) => {
         if (err) throw err;
         console.log(`you delete ${rows.affectedRows} row`);
-      });
-  });
+    });
+});
   ```
   
   
@@ -333,7 +336,7 @@ return (
     </ul>
 );
 ```
-We can define the modity function like this (we can can notice that we have to 'send' an object :
+We can define the modity function like this (we can can notice that we have to 'send' an object) :
 ```js
 modifyTeam = (id) => {
   const teamNameToModify = this.state.allTeams.filter(item => item.id === id)[0].TeamName;
@@ -346,7 +349,7 @@ modifyTeam = (id) => {
 
 ## Modify a team (backend)
 ```js
-  app.put('/modifyATeam/:TeamId', (req, res) => {
+app.put('/modifyATeam/:TeamId', (req, res) => {
     const { TeamId } = req.params;
     const NewTeamName = req.body.newName;
     if (!NewTeamName) return;
@@ -354,5 +357,5 @@ modifyTeam = (id) => {
         if (err) throw err;
         console.log(`you modify row number ${TeamId} for ${NewTeamName}`);
     });
-  });
+});
   ```
